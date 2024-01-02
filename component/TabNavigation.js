@@ -1,7 +1,7 @@
 // TabNavigator.js
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ProductCart from './../screens/cart/ProductCart';
+import CartScreen from './../screens/cart/CartScreen';
 import Content from './Content';
 
 
@@ -13,7 +13,7 @@ function TabNavigator() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Main" component={Content} />
-      <Tab.Screen name="Cart" component={ProductCart} />
+      <Tab.Screen name="Cart" component={CartScreen} />
     </Tab.Navigator>
   );
 }
