@@ -22,24 +22,26 @@ const CartScreen = () => {
     getCartData();
   }, []);
 
-  const updateQuantity = async (productId, newQuantity) => {
-    try {
-      const existingCart = await AsyncStorage.getItem('cart');
-      const cartData = existingCart ? JSON.parse(existingCart) : [];
 
-      const updatedCart = cartData.map((item) => {
-        if (item.id === productId) {
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      });
+const updateQuantity = async (productId, newQuantity) => {
+  try {
+    const existingCart = await AsyncStorage.getItem('cart');
+    const cartData = existingCart ? JSON.parse(existingCart) : [];
 
-      await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
-      setCart(updatedCart); // Đảm bảo rằng state được cập nhật sau khi thay đổi giỏ hàng
-    } catch (error) {
-      console.error('Lỗi khi cập nhật số lượng sản phẩm trong giỏ hàng:', error);
-    }
-  };
+    const updatedCart = cartData.map((item) => {
+      if (item.id === productId) {
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    });
+
+    await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
+    setCart(updatedCart); // Đảm bảo rằng state được cập nhật sau khi thay đổi giỏ hàng
+  } catch (error) {
+    console.error('Lỗi khi cập nhật số lượng sản phẩm trong giỏ hàng:', error);
+  }
+};
+
 
   const removeItemFromCart = async (productId) => {
     try {
@@ -63,34 +65,36 @@ const CartScreen = () => {
 
   return (
     <View>
-      <Text>Giỏ hàng của bạn:</Text>
+      <Text style={styles.headerShown}>Giỏ hàng của bạn:</Text>
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.container}>
             <View style={styles.image}>
-            <Image source={{ uri: item.image }} style={{ width: '100%', height: 60 }} />
+            <Image source={{ uri: item.image }} style={{ width: 100, height: 100 }} />
             </View >
             <View style={styles.shortInfor}>
             <Text style={{justifyContent:'flex-start'}}>{item.title}</Text>
-            <Text style={{justifyContent:'flex-start'}}>{item.price}</Text>
-            </View>
-            <View>
+            <Text style={{justifyContent:'flex-start'}}>Giá :{item.price}</Text>
+            <View style={styles.quantity}>
                 
             <TouchableOpacity onPress={() => updateQuantity(item.id, item.quantity + 1)}>
               <Text style={{justifyContent:'flex-start'}}>Tăng</Text>
             </TouchableOpacity>
-            <Text >Số lượng: {item.quantity}</Text>
+            <Text style={{marginStart:10,marginEnd:10}}>Số lượng: {item.quantity}</Text>
             <TouchableOpacity onPress={() => updateQuantity(item.id, item.quantity - 1)}>
               <Text style={{justifyContent:'flex-end'}}>Giảm</Text>
             </TouchableOpacity>
             </View>
-            <View style={styles.delete}>
+            <View >
                 <TouchableOpacity onPress={() => removeItemFromCart(item.id)}>
               <Text>Xóa khỏi giỏ hàng</Text>
                 </TouchableOpacity>
             </View>
+            </View>
+            
+            
 
             
             
@@ -105,26 +109,34 @@ const CartScreen = () => {
 const styles =StyleSheet.create({
     container:{
         flexDirection:'row',
-        justifyContent:'space-between',
+        
         marginBottom:15,
         marginTop:20
     },
     image:{
         flexDirection:'row',
-        justifyContent:'flex-start'
+        justifyContent:'flex-start',
+        marginRight:10
     },
     shortInfor:{
         flexDirection:'column',
+        marginRight:20
     },
     quantity:{
         flexDirection:'row',
-        
         marginBottom:15
     },
     delete:{
         flexDirection:'row',
-        justifyContent:'flex-start'
-    }
+        justifyContent:'flex-end'
+    },
+    headerShown:{
+        
+      fontWeight:'1000',
+      color:'blue',
+      marginHorizontal:'auto',
+      
+  }
 })
 export default CartScreen;
 
