@@ -38,7 +38,16 @@ function Content () {
           // Nội dung tiêu đề
         }}
       />
-      <Stack.Screen name="ProductCategory" component={ProductCategory} />
+      <Stack.Screen 
+      name="ProductCategory" 
+      component={ProductCategory}
+      options={{
+        headerShown: false,          // Ẩn thanh header
+        headerTransparent: true,     // Đặt background của header là trong suốt
+        headerLeft: () => null,      // Hiển thị nút quay lại mặc định
+        headerTitle: 'Home',         // Nội dung tiêu đề
+      }}
+       />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>

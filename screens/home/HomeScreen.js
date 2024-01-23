@@ -3,8 +3,9 @@ import { Image, Text, View ,StyleSheet, ScrollView,Button} from "react-native";
 import ListCategory from "./ListCategory";
 import ListProduct from './ListProduct';
 import MyHeader from "../../component/Header";
-
+import {useNavigation} from '@react-navigation/native';
 const HomeScreen= ()=>{
+    const navigation=useNavigation();
     return(
         <>
         <MyHeader/>
